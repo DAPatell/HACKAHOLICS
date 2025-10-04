@@ -1,9 +1,0 @@
-flask
-flask_sqlalchemy
-flask_jwt_extended
-requests
-pytesseract
-Pillow
-werkzeug
-flask-mail
-itsdangerous
