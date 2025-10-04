@@ -1,0 +1,8 @@
+flask==2.3.3
+flask-sqlalchemy==3.0.5
+flask-jwt-extended==4.5.3
+flask-mail==0.9.1
+werkzeug==2.3.7
+requests==2.31.0
+pytesseract==0.3.10
+Pillow==10.0.1

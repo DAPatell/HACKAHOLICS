@@ -1,0 +1,35 @@
+id INTEGER NOT NULL, 
+	expense_id INTEGER NOT NULL, 
+	approver_id INTEGER NOT NULL, 
+	status VARCHAR(10), 
+	comments TEXT, 
+	sequence INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(expense_id) REFERENCES expense (id), 
+	FOREIGN KEY(approver_id) REFERENCES user (id)
+)�Z�tableexpenseexpenseCREATE TABLE expense (
+	id INTEGER NOT NULL, 
+	employee_id INTEGER NOT NULL, 
+	amount NUMERIC(10, 2) NOT NULL, 
+	currency VARCHAR(3) NOT NULL, 
+	category VARCHAR(100) NOT NULL, 
+	description TEXT NOT NULL, 
+	date DATE NOT NULL, 
+	status VARCHAR(10), 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(employee_id) REFERENCES user (id)
+)�5�MtableuseruserCREATE TABLE user (
+	id INTEGER NOT NULL, 
+	username VARCHAR(80) NOT NULL, 
+	email VARCHAR(120) NOT NULL, 
+	password_hash VARCHAR(128) NOT NULL, 
+	role VARCHAR(10) NOT NULL, 
+	company_id INTEGER NOT NULL, 
+	manager_id INTEGER, 
+	is_manager_approver BOOLEAN, 
+	PRIMARY KEY (id), 
+	UNIQUE (username), 
+	UNIQUE (email), 
+	FOREIGN KEY(company_id) REFERENCES company (id), 
+	FOREIGN KEY(manager_id) REFERENCES user (id)
+)';

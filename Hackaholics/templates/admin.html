@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .nav button {
+            padding: 10px 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .nav button:hover {
+            background: #0056b3;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        
+        <div class="nav">
+            <button onclick="showSection('users')">Manage Users</button>
+            <button onclick="showSection('expenses')">View Expenses</button>
+            <button onclick="showSection('settings')">Settings</button>
+        </div>
+
+        <div id="users" class="section active">
+            <h2>Create New User</h2>
+            <form id="userForm">
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Role:</label>
+                    <select id="role" required>
+                        <option value="employee">Employee</option>
+                        <option value="manager">Manager</option>
+                    </select>
+                </div>
+                <button type="submit">Create User</button>
+            </form>
+        </div>
+
+        <div id="expenses" class="section">
+            <h2>All Expenses</h2>
+            <table id="expensesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Employee</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="settings" class="section">
+            <h2>Company Settings</h2>
+            <p>Settings panel would go here...</p>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionName) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionName).classList.add('active');
+        }
+
+        document.getElementById('userForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userData = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                role: document.getElementById('role').value
+            };
+
+            try {
+                const response = await fetch('/admin/create_user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (response.ok) {
+                    alert('User created successfully!');
+                    document.getElementById('userForm').reset();
+                } else {
+                    alert('Error creating user');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+
+        // Load expenses
+        async function loadExpenses() {
+            try {
+                const response = await fetch('/admin/all_expenses', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+
+                if (response.ok) {
+                    const expenses = await response.json();
+                    const tbody = document.querySelector('#expensesTable tbody');
+                    tbody.innerHTML = '';
+
+                    expenses.forEach(expense => {
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
+                            <td>${expense.id}</td>
+                            <td>${expense.employee}</td>
+                            <td>${expense.amount} ${expense.currency}</td>
+                            <td>${expense.category}</td>
+                            <td>${expense.status}</td>
+                            <td>
+                                <button onclick="approveExpense(${expense.id})">Approve</button>
+                                <button onclick="rejectExpense(${expense.id})">Reject</button>
+                            </td>
+                        `;
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading expenses:', error);
+            }
+        }
+
+        function approveExpense(id) {
+            updateExpenseStatus(id, 'approved');
+        }
+
+        function rejectExpense(id) {
+            updateExpenseStatus(id, 'rejected');
+        }
+
+        async function updateExpenseStatus(id, status) {
+            try {
+                const response = await fetch(`/admin/override_expense/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({ status: status })
+                });
+
+                if (response.ok) {
+                    alert(`Expense ${status} successfully!`);
+                    loadExpenses();
+                } else {
+                    alert('Error updating expense');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Load expenses when expenses section is shown
+        document.querySelector('button[onclick="showSection(\'expenses\')"]').addEventListener('click', loadExpenses);
+    </script>
+</body>
+</html>

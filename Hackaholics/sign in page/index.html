@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url(./WhatsApp\ Image\ 2025-10-04\ at\ 15.21.11.jpeg);
+      color: #D3A47B;
+    }
+    .signup-container {
+      background: #fff;
+      color: #4A2B1A;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 350px;
+    }
+    .signup-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .form-group input:focus {
+      border: 1px solid #2575fc;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background: #4A2B1A;
+      color: #D3A47B;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #1a5edb;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .success {
+      color: green;
+      text-align: center;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="signup-container">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter your name">
+        <div class="error" id="nameError">Name is required</div>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter your email">
+        <div class="error" id="emailError">Enter a valid email</div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter password">
+        <div class="error" id="passwordError">Password must be 6+ characters</div>
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Confirm password">
+        <div class="error" id="confirmError">Passwords do not match</div>
+      </div>
+
+      <button type="submit" class="btn">Sign Up</button>
+      <div class="success" id="successMsg">✅ Registration Successful!</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const confirmError = document.getElementById("confirmError");
+    const successMsg = document.getElementById("successMsg");
+
+    const themeToggle = document.getElementById("themeToggle");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let valid = true;
+
+      if (nameInput.value.trim() === "") {
+        nameError.style.display = "block";
+        valid = false;
+      } else {
+        nameError.style.display = "none";
+      }
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailInput.value.match(emailPattern)) {
+        emailError.style.display = "block";
+        valid = false;
+      } else {
+        emailError.style.display = "none";
+      }
+
+      if (passwordInput.value.length < 6) {
+        passwordError.style.display = "block";
+        valid = false;
+      } else {
+        passwordError.style.display = "none";
+      }
+
+      if (confirmPasswordInput.value !== passwordInput.value || confirmPasswordInput.value === "") {
+        confirmError.style.display = "block";
+        valid = false;
+      } else {
+        confirmError.style.display = "none";
+      }
+
+      if (valid) {
+        successMsg.style.display = "block";
+        form.reset();
+        setTimeout(() => { successMsg.style.display = "none"; }, 3000);
+      }
+    });
+
+  </script>
+
+</body>
+</html>

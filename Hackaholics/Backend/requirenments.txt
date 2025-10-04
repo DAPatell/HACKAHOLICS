@@ -1,0 +1,8 @@
+flask
+flask-sqlalchemy
+flask-jwt-extended
+requests
+pytesseract
+Pillow
+werkzeug
+flask-mail

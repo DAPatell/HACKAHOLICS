@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Expense Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            color: #666;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .service-features li::before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .pricing-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pricing-card {
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            color: #666;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">🚀 Expense Manager</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/signin">Sign In</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Our Services</h1>
+        <p>Comprehensive expense management solutions for businesses of all sizes</p>
+    </div>
+
+    <div class="container">
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💰</div>
+                <h3>Expense Tracking</h3>
+                <p>Easily submit, track, and manage all your business expenses in one centralized platform.</p>
+                <ul class="service-features">
+                    <li>Digital receipt upload</li>
+                    <li>Automatic categorization</li>
+                    <li>Real-time status updates</li>
+                    <li>Mobile app access</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>Analytics & Reporting</h3>
+                <p>Get detailed insights into your spending patterns with comprehensive reports and analytics.</p>
+                <ul class="service-features">
+                    <li>Custom reports</li>
+                    <li>Visual dashboards</li>
+                    <li>Budget tracking</li>
+                    <li>Export to Excel/PDF</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🔐</div>
+                <h3>Approval Workflows</h3>
+                <p>Streamline your approval process with customizable workflows and automated notifications.</p>
+                <ul class="service-features">
+                    <li>Multi-level approvals</li>
+                    <li>Automated notifications</li>
+                    <li>Escalation rules</li>
+                    <li>Audit trails</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3>Multi-Currency Support</h3>
+                <p>Handle expenses in multiple currencies with automatic conversion and exchange rate updates.</p>
+                <ul class="service-features">
+                    <li>Real-time exchange rates</li>
+                    <li>Multiple currency accounts</li>
+                    <li>Automatic conversion</li>
+                    <li>Currency-specific reports</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Mobile Access</h3>
+                <p>Access your expense management system anywhere with our mobile-optimized interface.</p>
+                <ul class="service-features">
+                    <li>Responsive design</li>
+                    <li>Offline capability</li>
+                    <li>Push notifications</li>
+                    <li>Camera integration</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🛡️</div>
+                <h3>Security & Compliance</h3>
+                <p>Enterprise-grade security with compliance features for regulated industries.</p>
+                <ul class="service-features">
+                    <li>SSL encryption</li>
+                    <li>GDPR compliance</li>
+                    <li>Role-based access</li>
+                    <li>Data backup</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pricing-section">
+            <h2 style="text-align: center; margin-bottom: 1rem; color: #333;">Pricing Plans</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Choose the plan that fits your business needs</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">$9</div>
+                    <div class="price-period">per user/month</div>
+                    <ul class="pricing-features">
+                        <li>Up to 5 users</li>
+                        <li>Basic expense tracking</li>
+                        <li>Email support</li>
+                        <li>Standard reports</li>
+                        <li>Mobile access</li>
+                    </ul>
+                    <a href="/signup" class="btn btn-outline">Get Started</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <div class="price">$19</div>
+                    <div class="price-period">per user/month</div>
+                    <ul class="pricing-features">
+                        <li>Up to 50 users</li>
+                        <li>Advanced analytics</li>
+                        <li>Priority support</li>
+                        <li>Custom workflows</li>
+                        <li>API access</li>
+                        <li>Multi-currency</li>
+                    </ul>
+                    <a href="/signup" class="btn btn-primary">Most Popular</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">$39</div>
+                    <div class="price-period">per user/month</div>
+                    <ul class="pricing-features">
+                        <li>Unlimited users</li>
+                        <li>Custom integrations</li>
+                        <li>24/7 support</li>
+                        <li>Advanced security</li>
+                        <li>Dedicated manager</li>
+                        <li>On-premise option</li>
+                    </ul>
+                    <a href="/contact" class="btn btn-outline">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/services">Services</a>
+            <a href="/contact">Contact</a>
+            <a href="/signin">Sign In</a>
+            <a href="/signup">Sign Up</a>
+        </div>
+        <p>&copy; 2024 Expense Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>
