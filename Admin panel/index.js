@@ -66,3 +66,4 @@ const form = document.getElementById("signupForm");
         }, 3000);
       }
     });
+

@@ -18,45 +18,17 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-      color: #333;
+      background-image: url(./WhatsApp\ Image\ 2025-10-04\ at\ 15.21.11.jpeg);
+      color: #D3A47B;
     }
-
-    body.dark {
-      background: #121212;
-      color: #f5f5f5;
-    }
-
-    .toggle-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: #fff;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    body.dark .toggle-btn {
-      background: #333;
-      color: #f5f5f5;
-    }
-
     .signup-container {
       background: #fff;
+      color: #4A2B1A;
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       width: 350px;
     }
-
-    body.dark .signup-container {
-      background: #1e1e1e;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-    }
-
     .signup-container h2 {
       text-align: center;
       margin-bottom: 20px;
@@ -80,13 +52,6 @@
       outline: none;
       transition: all 0.3s ease;
     }
-
-    body.dark .form-group input {
-      background: #2c2c2c;
-      border: 1px solid #555;
-      color: #f5f5f5;
-    }
-
     .form-group input:focus {
       border: 1px solid #2575fc;
     }
@@ -94,8 +59,8 @@
     .btn {
       width: 100%;
       padding: 10px;
-      background: #2575fc;
-      color: #fff;
+      background: #4A2B1A;
+      color: #D3A47B;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -125,7 +90,6 @@
 </head>
 <body>
 
-  <button class="toggle-btn" id="themeToggle">🌙 Dark Mode</button>
 
   <div class="signup-container">
     <h2>Sign Up</h2>
@@ -214,14 +178,6 @@
       }
     });
 
-    themeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      if(document.body.classList.contains("dark")){
-        themeToggle.textContent = "☀️ Light Mode";
-      } else {
-        themeToggle.textContent = "🌙 Dark Mode";
-      }
-    });
   </script>
 
 </body>

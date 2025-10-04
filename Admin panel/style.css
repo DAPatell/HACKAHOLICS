@@ -11,11 +11,10 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      background: url(WhatsApp\ Image\ 2025-10-04\ at\ 15.21.11.jpeg);
     }
-
     .page-heading {
-      color: #fff;
+      color: #4A2B1A;
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 20px;
@@ -65,8 +64,8 @@
     .btn {
       width: 100%;
       padding: 10px;
-      background: #2575fc;
-      color: #fff;
+      background: #2D1B12;
+      color: #D3A47B;
       border: none;
       border-radius: 8px;
       cursor: pointer;
